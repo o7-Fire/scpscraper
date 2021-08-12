@@ -94,6 +94,9 @@ def parse_scp(soup: BeautifulSoup, scp_id: Union[str, int]) -> dict:
   try:
     main_image = content.find('div', {'class': 'scp-image-block'}).contents[0]['src']
   
+  except TypeError:
+    main_image = None
+
   # Error handling.
   except AttributeError:
     # print(f'No main_image found for SCP-{scp_id}!')
@@ -129,11 +132,12 @@ def parse_scp(soup: BeautifulSoup, scp_id: Union[str, int]) -> dict:
     for item in content.find_all('p'):
       # Grab the paragraph element's first child.
       first_child = item.next
-      
+      if first_child is None:continue
       # Use bold portions as keys/identifiers for their sections.
       if first_child.name == 'strong':
         key = first_child.text.rstrip(': ')
-        value = first_child.next_sibling.strip(': ')
+        value = str(first_child.next_sibling)
+        value = value.strip(': ')
       
       else:
         # Add subsequent paragraphs to the same section.
