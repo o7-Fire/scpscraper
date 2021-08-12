@@ -9,7 +9,7 @@ cacheRequest = {}
 def get_single_scp(scp_id: str) -> BeautifulSoup:
   """Returns HTML code for the `page-content` div of a given SCP."""
   global cacheRequest
-  if scp_id in cache:
+  if scp_id in cacheRequest:
     return cacheRequest[scp_id]
   try:
     # Grab the HTML code.
