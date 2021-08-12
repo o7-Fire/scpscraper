@@ -240,10 +240,10 @@ def scrape_scps(min_skip: int=0, max_skip: int=6000, tags: list=[], ai_dataset: 
   """
   # Create/clear the files we need for scraping.
   filelist = []
-  filelist.append(open('scp-descrips.txt', 'w'))
-  filelist.append(open('scp-conprocs.txt', 'w'))
-  filelist.append(open('scp-titles.txt', 'w'))
-  filelist.append(open('scp-addenda.txt', 'w'))
+  filelist.append(open('scp-descrips.txt', 'a'))
+  filelist.append(open('scp-conprocs.txt', 'a'))
+  filelist.append(open('scp-titles.txt', 'a'))
+  filelist.append(open('scp-addenda.txt', 'a'))
   for i in range(len(filelist)):
     filelist[i].close()
 
