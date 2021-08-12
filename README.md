@@ -9,7 +9,7 @@ Below you will find installation instructions, examples of how to use this libra
 ### Installation
 `scpscraper` can be installed via `pip install`. Here's the command I recommend using, so you consistently have the latest version.
 ```
-pip3 install --upgrade scpscraper
+pip3 install git+https://github.com/o7-Fire/scpscraper
 ```
 
 ### The Basics
