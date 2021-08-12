@@ -5,23 +5,33 @@ from typing import Union
 from tqdm import tqdm
 
 from scpscraper import gdrive
-
+cacheRequest = {}
 def get_single_scp(scp_id: str) -> BeautifulSoup:
   """Returns HTML code for the `page-content` div of a given SCP."""
+  global cacheRequest
+  if scp_id in cache:
+    return cacheRequest[scp_id]
   try:
     # Grab the HTML code.
     r = urllib.request.urlopen(url=f'http://scp-wiki.wikidot.com/scp-{scp_id}')
     
     # Return the organized content for parsing.
-    return BeautifulSoup(r, 'lxml')
+    h =  BeautifulSoup(r, 'lxml')
+    cacheRequest[scp_id] = h
+    return h
   
   # Error handling.
   except Exception as e:
 #     print(f'\nWARNING: Failed to access SCP Wiki page for SCP-{scp_id}. Error: {e}', file=sys.stderr)
     return
 
+
+cacheSCPName = {}
 def _get_scp_name(scp_id: int) -> str:
   """Gets the name of an SCP from the SCP Series pages. Internal function, shouldn't need to be called by a user."""
+  global cacheSCPName
+  if scp_id in cacheSCPName:
+    return cacheSCPName[scp_id]
   try:
     # Determine which series the SCP is in.
     if scp_id < 1000:
@@ -42,6 +52,7 @@ def _get_scp_name(scp_id: int) -> str:
         if re.findall('[0-9]+', li.find_next('a')['href']):
           if int(re.findall('[0-9]+', li.find_next('a')['href'])[0]) == scp_id:
             scp_name = re.split('-', li.get_text())[-1]
+            cacheSCPName[scp_id] = scp_name
             return scp_name.strip(' ')
     
     # Handle 404 errors.
