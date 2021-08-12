@@ -111,6 +111,9 @@ def parse_scp(soup: BeautifulSoup, scp_id: Union[str, int]) -> dict:
   try:
     image_caption = content.find('div', {'class': 'scp-image-block'}).contents[2].contents[1].contents[0]
   
+  except IndexError:
+    image_caption = None
+
   # Error handling.
   except AttributeError:
     # print(f'No image_caption found for SCP-{scp_id}!')
