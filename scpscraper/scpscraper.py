@@ -420,7 +420,10 @@ def scrape_scps(min_skip: int=0, max_skip: int=6000, tags: list=[], ai_dataset: 
     with open(f'{skip_file}.tmp', "r") as infile:
       with open(skip_file, 'w') as outfile:
         outfile.write(infile.read())
-    os.remove(f'{skip_file}.tmp')
+    try:
+      os.remove(f'{skip_file}.tmp')
+    except:
+      ignorethisvalueolololololololololololololol = 0
     if copy_to_drive:
       gdrive.copy_to_drive(skip_file)
   # print("Done!")
